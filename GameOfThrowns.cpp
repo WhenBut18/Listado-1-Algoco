@@ -6,7 +6,7 @@ using namespace std;
 int main(){
     stack<int> historialPosiciones;
     string instruccion;
-    int posicion, undo, calc, cantidadAlumnos, cantidadInstrucciones = 0;
+    int posicion = 0 , undo = 0, calc = 0, cantidadAlumnos = 0, cantidadInstrucciones = 0;
     cin >> cantidadAlumnos >> cantidadInstrucciones;
     historialPosiciones.push(posicion);
     for (int i = 0; i < cantidadInstrucciones; i++){\
@@ -28,6 +28,6 @@ int main(){
         }
         historialPosiciones.push(posicion);
     }
-    cout << posicion << endl;
+    cout << posicion;
     return 0;
 }
