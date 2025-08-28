@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-    int lal = -2%7;
-    cout << lal << endl;
-    return 0;
+    int lal = 10;
+    if (lal){
+        cout<<"si";
+    }
 }
