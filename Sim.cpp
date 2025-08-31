@@ -4,34 +4,35 @@ using namespace std;
 #include <string>
 
 int main(){
-    int casos, cursor = 0;
-    vector<string> instrucciones;
-    string instruccion, resultado;
+    int casos;
+    list<char> resultado;
+    auto bis = resultado.begin();
+    string instruccion;
     cin >> casos;
     cin.ignore();
     for (int i = 0; i < casos; i++){
+        auto cursor = resultado.end();
         getline(cin, instruccion);
-        instrucciones.push_back(instruccion);
-    }
-    for(auto l: instrucciones){
-        for(auto p: l){
+        for(auto p: instruccion){ 
             if (p == '[') {
-                cursor = 0;
+                cursor = resultado.begin();
             } else if (p == ']'){
-                cursor = resultado.size();
+                cursor = resultado.end();
             } else if (p == '<'){
-                if (!(cursor == 0)){
+                if (cursor != resultado.begin()){
                     cursor--;
-                    resultado.erase(cursor,1);
+                    cursor = resultado.erase(cursor);
                 }
             } else {
-                resultado.insert(cursor, 1, p);
+                cursor = resultado.insert(cursor, p);
                 cursor++;
             }
         }
-        cout << resultado << endl;
-        cursor = 0;
+        for (auto p : resultado){
+            cout << p;
+        }
+        cout << endl;
         resultado.clear();
-    }
+    }  
     return 0;
 }
