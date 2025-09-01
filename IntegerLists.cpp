@@ -1,64 +1,60 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
-#include <string>
 
-int main(){
-    deque<string> listaActual;
-    string instruccion, lista, numero;
-    bool state = false, state2 = true;
-    int casos, tamañolista;
+int main() {
+    string instruccion, arr;
+    int casos, n;
     cin >> casos;
-    for (int i = 0; i < casos; i++){
-        cin >> instruccion;
-        cin >> tamañolista;
-        cin.ignore(2);
-        for (int j = 0; j < tamañolista; j++){
-            if (j+1 == tamañolista){
-                getline(cin, numero, ']');
-            } else {
-                getline(cin, numero, ',');
+    while (casos--) {
+        deque<int> listaActual;
+        cin >> instruccion >> n >> arr;
+        string num = "";
+        if (n > 0) {
+            for (char c : arr) {
+                if (isdigit(c)) {
+                    num += c;
+                } else if (c == ',' || c == ']') {
+                    if (!num.empty()) {
+                        listaActual.push_back(stoi(num));
+                        num.clear();
+                    }
+                }
             }
-            listaActual.push_back(numero);
         }
-        for (auto p : instruccion){
-            if (p == 'R'){
-                state = !state;
-            } else if (p == 'D'){
-                if (listaActual.empty()){
-                    cout << "error" << endl;
-                    state2 = false;
+
+        bool rev = false, ok = true;
+        for (char c : instruccion) {
+            if (c == 'R') {
+                rev = !rev;
+            } else {
+                if (listaActual.empty()) {
+                    cout << "error\n";
+                    ok = false;
                     break;
                 }
-                if (state){
+                if (rev) {
                     listaActual.pop_back();
                 } else {
                     listaActual.pop_front();
                 }
-            } 
-        }
-        if (state2){
-            cout << "[";
-            if (state){
-                for (int i = listaActual.size() - 1; i >= 0; --i) {
-                    cout << listaActual[i];
-                    if (i != 0){
-                        cout << ",";
-                    }
-                }
-            } else {
-                for (int i = 0; i < listaActual.size(); i++) {
-                    cout << listaActual[i];
-                    if ((i + 1) != listaActual.size()){
-                        cout << ",";
-                    }
-                }
             }
-            cout << "]" << endl;
         }
-        state2 = true;
-        listaActual.clear();
-        state = false;
+
+        if (!ok) continue;
+
+        cout << "[";
+        if (rev) {
+            for (int i = listaActual.size() - 1; i >= 0; --i) {
+                cout << listaActual[i];
+                if (i != 0) cout << ",";
+            }
+        } else {
+            for (int i = 0; i < listaActual.size(); i++) {
+                cout << listaActual[i];
+                if (i + 1 != listaActual.size()) cout << ",";
+            }
+        }
+        cout << "]\n";
     }
     return 0;
 }
