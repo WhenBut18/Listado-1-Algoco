@@ -32,7 +32,9 @@ int main(){
                 }
             } else {
                 for (auto p : buyMap){
-                    
+                    if (p.first < precio){
+                        break;
+                    }
                 }
             }
         }
