@@ -4,43 +4,37 @@ using namespace std;
 #include <string>
 
 int main(){
-    list<int> alturas;
-    int cantMontañas, altura, MaxIzqAltura, MaxDerAltura, MinIzqAltura, MinDerAltura, DifIzq, DifDer;
-    cin >> cantMontañas;
-    while (cantMontañas--){
-        cin >> altura;
-        alturas.push_back(altura);
+  int cantMont; 
+  cin>>cantMont;
+  vector<int> mont(cantMont);
+  for(int &i: mont) {
+    cin>>i;
+  }
+  int max = mont[0];
+  int min = mont[0];
+  int maxdiff = 0;
+  bool adyacent = 1;
+  for(int i = 1; i < cantMont; i++) {
+    if (mont[i] >= max) {
+      if (maxdiff < max-min) maxdiff = max-min;
+      max = mont[i];
+      min = mont[i];
+    } else if (mont[i] < min) {
+      min = mont[i];
     }
-    auto DerCursor = prev(alturas.end()), IzqCursor = alturas.begin();
-    MaxIzqAltura = *IzqCursor, MinIzqAltura = *IzqCursor, MaxDerAltura = *DerCursor, MinDerAltura = *DerCursor, DifDer = 0, DifIzq = 0;
-    cantMontañas = alturas.size();
-    while ((cantMontañas--) - 1){
-        --DerCursor, ++IzqCursor;
-        if (MaxDerAltura <= *DerCursor){
-            MaxDerAltura == *DerCursor;
-            MinDerAltura == *DerCursor;
-        }
-        if (MaxIzqAltura <= *IzqCursor){
-            MaxIzqAltura == *IzqCursor;
-            MinIzqAltura == *IzqCursor;
-        }
-        if (MinDerAltura > *DerCursor){
-            MinDerAltura = *DerCursor;
-        }
-        if (MinIzqAltura > *IzqCursor){
-            MinIzqAltura = *IzqCursor;
-        }
-        if (DifDer < MaxDerAltura-MinDerAltura){
-            DifDer = MaxDerAltura-MinDerAltura;
-        }
-        if (DifIzq < MaxIzqAltura-MinIzqAltura){
-            DifIzq = MaxIzqAltura-MinIzqAltura;
-        }
+  }
+  max = mont[cantMont-1];
+  min = mont[cantMont-1];
+  for(int i = cantMont-2; i >= 0; i--) {
+    if (mont[i] >= max) {
+      if (maxdiff < max-min) maxdiff = max-min;
+      max = mont[i];
+      min = mont[i];
+    } else if (mont[i] < min) {
+      min = mont[i];
     }
-    if (DifDer >= DifIzq){
-        cout << DifDer;
-    } else {
-        cout << DifIzq;
-    }
-    return 0;
+  }
+  cout<<maxdiff;
+  cout<<endl;
+  return 0;
 }

@@ -1,67 +1,43 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-typedef long long ll;
-
-int main() {
-    int n, med;
-    cin >> n >> med;
-
-    vector<int> v(n);
-    int pos;
-    for(int i = 0; i < n; i++) {
-        cin >> v[i];
-        if(v[i] == med) {
-            pos = i;
-        }
-    }
-
-    map<int,int> m;
-    m[0] = 1;
-    int sum = 0;
-    for(int i = pos+1; i < n; i++) {
-        if(v[i] > med) sum++;
-        else sum--;
-        m[sum]++;
-    }
-
-    ll ans = m[0];
-    sum = 0;
-    for(int i = pos-1; i >= 0; i--) {
-        if(v[i] > med) sum++;
-        else sum--;
-        ans += m[-sum];
-    }
-
-    cout << ans << endl;
-}
-/*
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 #include <string>
 
-int main(){
-    int cantSub = 0, sizeLista, objetivo, elem, pt1 = 0, pt2 = -1, median;
-    cin >> sizeLista >> objetivo;
+int main() {
+    int sizeVector, mediana;
+    cin >> sizeVector >> mediana;
+    vector<int> numeros(sizeVector);
+    for (int i = 0; i < sizeVector; ++i) {
+        cin >> numeros[i];
+    }
+    int pos_mediana = 0;
+    for (int i = 0; i < sizeVector; ++i) {
+        if (numeros[i] == mediana) {
+            pos_mediana = i;
+            break;
+        }
+    }
+    unordered_map<int,int> conteo_balance;
+    conteo_balance[0] = 1;
+    int balance = 0;
+    for (int i = pos_mediana - 1; i >= 0; --i) {
+        if (numeros[i] < mediana) {
+            --balance;
+        } else {
+            ++balance;
+        }
+        ++conteo_balance[balance];
+    }
+    int cantSubArreglo = 0;
+    balance = 0;
+    for (int i = pos_mediana; i < sizeVector; ++i) {
+        if (numeros[i] < mediana) {
+            --balance;
+        } else if (numeros[i] > mediana) {
+            ++balance;
+        }
+        cantSubArreglo += conteo_balance[-balance];
+    }
 
-    vector <int> lista;
-    while (sizeLista--){
-        cin >> elem;
-        lista.push_back(elem);
-        if (elem == objetivo){
-            cantSub++;
-        }
-    }
-    if (cantSub != 0){
-        while (pt2 < lista.size()){
-        while (pt2 < lista.size() && median < objetivo){
-            pt2++;
-            median = 
-        }
-      
-    }
-    cout << cantSub;
-    return 0;
+    cout << cantSubArreglo << endl;
 }
-*/
